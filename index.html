@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <meta name="format-detection" content="telephone=no, email=no"/>
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  <meta name="format-detection" content="telephone=no"/>
+  <meta name="theme-color" content="#2196F3">
+  <meta name="renderer" content="webkit">
+  <meta name="Keywords" content="Let's Math,在线练习算数app,运算练习">
+  <title>Let's Math - 来算数</title>
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body class="mdui-theme-primary-blue mdui-theme-accent-pink mdui-appbar-with-toolbar mdui-appbar-with-tab">
+  <header>
+    <div class="mdui-appbar mdui-appbar-fixed">
+      <div class="mdui-toolbar mdui-color-theme">
+        <span class="mdui-typo-title">Let's Math - 来算数</span>
+        <div class="mdui-toolbar-spacer"></div>
+        <a href="javascript:GetRandom();" class="mdui-btn mdui-btn-icon mdui-ripple" mdui-tooltip="{content: '更换题目'}">
+          <i class="mdui-icon material-icons">&#xe5d5;</i>
+        </a>
+        <a href="javascript:;" class="mdui-btn mdui-btn-icon mdui-ripple" mdui-tooltip="{content: '设置'}" mdui-dialog="{target: '#settingDialog'}">
+          <i class="mdui-icon material-icons">&#xe8b8;</i>
+        </a>
+      </div>
+      <div class="mdui-tab mdui-color-theme" mdui-tab>
+        <a href="#add" class="mdui-ripple mdui-ripple-white">加法</a>
+        <a href="#sub" class="mdui-ripple mdui-ripple-white">减法</a>
+        <a href="#mul" class="mdui-ripple mdui-ripple-white">乘法</a>
+        <a href="#division" class="mdui-ripple mdui-ripple-white">除法</a>
+        <a href="#power" class="mdui-ripple mdui-ripple-white">乘方</a>
+      </div>
+    </div>
+  </header>
+  <div id="container" class="mdui-container">
+    <div class="mdui-dialog" id="settingDialog">
+      <div class="mdui-dialog-title">Settings</div>
+      <div class="mdui-dialog-content">
+        <div class="mdui-row">
+          <div class="mdui-col-xs-12">第一个数字范围：</div>
+          <div class="mdui-col-xs-6">
+            <div class="mdui-textfield mdui-textfield-floating-label">
+              <label class="mdui-textfield-label">最小值</label>
+              <input id="Fmin" value="1" class="mdui-textfield-input" type="number" required>
+              <div class="mdui-textfield-error">请输入正确的数字</div>
+            </div>
+          </div>
+          <div class="mdui-col-xs-6">
+            <div class="mdui-textfield mdui-textfield-floating-label">
+              <label class="mdui-textfield-label">最大值</label>
+              <input id="Fmax" value="100" class="mdui-textfield-input" type="number" required>
+              <div class="mdui-textfield-error">请输入正确的数字</div>
+            </div>
+          </div>
+        </div>
+        <div class="mdui-row">
+          <div class="mdui-col-xs-12">第二个数字范围：</div>
+          <div class="mdui-col-xs-6">
+            <div class="mdui-textfield mdui-textfield-floating-label">
+              <label class="mdui-textfield-label">最小值</label>
+              <input id="Smin" value="1" class="mdui-textfield-input" type="number" required>
+              <div class="mdui-textfield-error">请输入正确的数字</div>
+            </div>
+          </div>
+          <div class="mdui-col-xs-6">
+            <div class="mdui-textfield mdui-textfield-floating-label">
+              <label class="mdui-textfield-label">最大值</label>
+              <input id="Smax" value="100" class="mdui-textfield-input" type="number" required>
+              <div class="mdui-textfield-error">请输入正确的数字</div>
+            </div>
+          </div>
+        </div>
+        <div class="mdui-row">
+          <div class="mdui-col-xs-6">
+            <label class="mdui-checkbox">
+              <input id="autoNew" type="checkbox" checked>
+              <i class="mdui-checkbox-icon"></i>
+              答案正确时自动换题
+            </label>
+          </div>
+        </div>
+        <div class="mdui-row">
+          <div class="mdui-col-xs-6">
+            <label class="mdui-checkbox">
+              <input id="CardLimt" type="checkbox" />
+              <i class="mdui-checkbox-icon"></i>
+              卡片宽度限制
+            </label>
+          </div>
+        </div>        
+      </div>
+      <div class="mdui-dialog-actions">
+        <button onclick="Readconf();" class="mdui-btn mdui-ripple" mdui-dialog-close>cancel</button>
+        <button onclick="Saveconf();" class="mdui-btn mdui-ripple" mdui-dialog-confirm>Save</button>
+      </div>
+    </div>
+    <!--第二个提示-->
+      <div class="mdui-dialog" id="frist_dialog">
+    <div class="mdui-dialog-title">[新手帮助] You're the new? </div>
+    <div class="mdui-dialog-content">请您花几分钟的时间阅读此提示内容<br />请点击相应的tab[标签]查看提示：<br />(点击空白处关闭)
+    <div class="mdui-tab mdui-tab-full-width" id="help-tab">
+    <a href="#help-tab1" class="mdui-ripple mdui-tab-active">这是什么东西？</a>
+    <a href="#help-tab2" class="mdui-ripple">我该如何使用？</a>
+    <a href="#help-tab3" class="mdui-ripple">如何离线使用？</a>
+  </div>
+  <div id="help-tab1" class="mdui-p-a-2">
+    <p>Let's Math 是一个在线的练习数学算数APP。</p>
+    <p>轻盈，您不需要为此特意去下载一个应用程序</p>
+    <p>快捷，只需要一个浏览器，您就可以在多终端畅玩</p>
+    <p>稳定，即使是一个网页也能保存您的个性设定</p>
+    <p>离线，在安卓上，您能离线使用本APP[需要Chrome]</p>
+    <p>美观，采用Material Design 设计风格精心设计</p>
+  </div>
+  <div id="help-tab2" class="mdui-p-a-2">
+    <p>如果您是第一次使用，请先点击右上角的设置按钮：</p>
+    <p>1.设定您的使用习惯</p>
+    <p>2.设定数字范围</p>
+    <p>3.点击&lt;Save&gt;按钮</p>
+    <p>4.之后您就能在Tab栏里选择您需要练习的项目了</p>
+    <p>5.点击&lt;更换题目&gt;按钮换题</p>
+  </div>
+  <div id="help-tab3" class="mdui-p-a-2">
+    <p>离线使用我们需要使用到Chrome浏览器，在安卓手机上下载Chrome浏览器：</p>
+    <p>1.在Chrome浏览器内打开本页面</p>
+    <p>2.点击Chrome浏览器左上角按钮&lt;添加到桌面&gt;</p>
+    <p>3.添加以后在桌面寻找 您添加的图标即可离线使用</p>
+    <p>您，准备好了吗？</p>
+  </div>
+  </div>
+      <div class="mdui-dialog-actions">
+      <button class="mdui-btn mdui-ripple" mdui-dialog-cancel>下次提示</button>
+      <button onclick="Ialreadyread();" class="mdui-btn mdui-ripple" mdui-dialog-confirm>我知道了</button>
+    </div>
+</div>
+
+    <div id="add">
+      <div class="mdui-card">
+        <div class="mdui-card-primary">
+          <div class="mdui-card-primary-title">
+            Addition
+          </div>
+          <div class="mdui-card-primary-subtitle">
+            加法运算
+          </div>
+          <div class="mdui-card-content">
+            <div class="mdui-row">
+              <div class="mdui-col-xs-2">
+              </div>
+              <div class="mdui-col-xs-10">
+                <span id="Afirst" class="mdui-typo-display-1">4568</span>
+              </div>
+            </div>
+            <div class="mdui-row">
+              <div class="mdui-col-xs-1">
+              </div>
+              <div class="mdui-col-xs-11">
+                <span class="mdui-typo-display-1-opacity">＋</span>
+              </div>
+            </div>
+            <div class="mdui-row">
+              <div class="mdui-col-xs-2">
+              </div>
+              <div class="mdui-col-xs-10">
+                <span id="Asecond" class="mdui-typo-display-1">4568</span>
+              </div>
+            </div>
+            <div class="mdui-row">
+              <div class="mdui-col-xs-12">
+                <div class="mdui-textfield mdui-textfield-floating-label">
+                  <label class="mdui-textfield-label">结果</label>
+                  <input id="Ainput" class="mdui-textfield-input" maxlength="60" type="number" required>
+                  <div class="mdui-textfield-error">请输入正确的数字</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mdui-card-actions">
+            <button onclick="CheckResult(1);" class="mdui-btn mdui-ripple mdui-float-right mdui-text-color-theme-accent">提交结果</button>
+            <button onclick="Operation(1);" class="mdui-btn mdui-ripple mdui-float-right mdui-text-color-theme-accent">查看答案</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="sub">
+      <div class="mdui-card">
+        <div class="mdui-card-primary">
+          <div class="mdui-card-primary-title">
+            Subtraction
+          </div>
+          <div class="mdui-card-primary-subtitle">
+            减法运算
+          </div>
+          <div class="mdui-card-content">
+            <div class="mdui-row">
+              <div class="mdui-col-xs-2">
+              </div>
+              <div class="mdui-col-xs-10">
+                <span id="Sfirst" class="mdui-typo-display-1">4568</span>
+              </div>
+            </div>
+            <div class="mdui-row">
+              <div class="mdui-col-xs-1">
+              </div>
+              <div class="mdui-col-xs-11">
+                <span class="mdui-typo-display-1-opacity">－</span>
+              </div>
+            </div>
+            <div class="mdui-row">
+              <div class="mdui-col-xs-2">
+              </div>
+              <div class="mdui-col-xs-10">
+                <span id="Ssecond" class="mdui-typo-display-1">4568</span>
+              </div>
+            </div>
+            <div class="mdui-row">
+              <div class="mdui-col-xs-12">
+                <div class="mdui-textfield mdui-textfield-floating-label">
+                  <label class="mdui-textfield-label">结果</label>
+                  <input id="Sinput" class="mdui-textfield-input" maxlength="60" type="number" required>
+                  <div class="mdui-textfield-error">请输入正确的数字</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mdui-card-actions">
+            <button onclick="CheckResult(2);" class="mdui-btn mdui-ripple mdui-float-right mdui-text-color-theme-accent">提交结果</button>
+            <button onclick="Operation(2);" class="mdui-btn mdui-ripple mdui-float-right mdui-text-color-theme-accent">查看答案</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="mul">
+      <div class="mdui-card">
+        <div class="mdui-card-primary">
+          <div class="mdui-card-primary-title">
+            Multiplication
+          </div>
+          <div class="mdui-card-primary-subtitle">
+            乘法运算
+          </div>
+          <div class="mdui-card-content">
+            <div class="mdui-row">
+              <div class="mdui-col-xs-2">
+              </div>
+              <div class="mdui-col-xs-10">
+                <span id="Mfirst" class="mdui-typo-display-1">4568</span>
+              </div>
+            </div>
+            <div class="mdui-row">
+              <div class="mdui-col-xs-1">
+              </div>
+              <div class="mdui-col-xs-11">
+                <span class="mdui-typo-display-1-opacity">×</span>
+              </div>
+            </div>
+            <div class="mdui-row">
+              <div class="mdui-col-xs-2">
+              </div>
+              <div class="mdui-col-xs-10">
+                <span id="Msecond" class="mdui-typo-display-1">4568</span>
+              </div>
+            </div>
+            <div class="mdui-row">
+              <div class="mdui-col-xs-12">
+                <div class="mdui-textfield mdui-textfield-floating-label">
+                  <label class="mdui-textfield-label">结果</label>
+                  <input id="Minput" class="mdui-textfield-input" maxlength="60" type="number" required>
+                  <div class="mdui-textfield-error">请输入正确的数字</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mdui-card-actions">
+            <button onclick="CheckResult(3);" class="mdui-btn mdui-ripple mdui-float-right mdui-text-color-theme-accent">提交结果</button>
+            <button onclick="Operation(3);" class="mdui-btn mdui-ripple mdui-float-right mdui-text-color-theme-accent">查看答案</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="division">
+      <div class="mdui-card">
+        <div class="mdui-card-primary">
+          <div class="mdui-card-primary-title">
+            Division
+          </div>
+          <div class="mdui-card-primary-subtitle">
+            除法运算
+          </div>
+          <div class="mdui-card-content">
+            <div class="mdui-row">
+              <div class="mdui-col-xs-2">
+              </div>
+              <div class="mdui-col-xs-10">
+                <span id="Dfirst" class="mdui-typo-display-1">4568</span>
+              </div>
+            </div>
+            <div class="mdui-row">
+              <div class="mdui-col-xs-1">
+              </div>
+              <div class="mdui-col-xs-11">
+                <span class="mdui-typo-display-1-opacity">÷</span>
+              </div>
+            </div>
+            <div class="mdui-row">
+              <div class="mdui-col-xs-2">
+              </div>
+              <div class="mdui-col-xs-10">
+                <span id="Dsecond" class="mdui-typo-display-1">4568</span>
+              </div>
+            </div>
+            <div class="mdui-row">
+              <div class="mdui-col-xs-12">
+                <div class="mdui-textfield mdui-textfield-floating-label">
+                  <label class="mdui-textfield-label">结果</label>
+                  <input id="Dinput" class="mdui-textfield-input" maxlength="60" type="number" required>
+                  <div class="mdui-textfield-error">请输入正确的数字</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mdui-card-actions">
+            <button onclick="CheckResult(4);" class="mdui-btn mdui-ripple mdui-float-right mdui-text-color-theme-accent">提交结果</button>
+            <button onclick="Operation(4);" class="mdui-btn mdui-ripple mdui-float-right mdui-text-color-theme-accent">查看答案</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="power">
+      <div class="mdui-card">
+        <div class="mdui-card-primary">
+          <div class="mdui-card-primary-title">
+            Power
+          </div>
+          <div class="mdui-card-primary-subtitle">
+            乘方运算
+          </div>
+          <div class="mdui-card-content">
+            <div class="mdui-row">
+              <div class="mdui-col-xs-2">
+              </div>
+              <div class="mdui-col-xs-10">
+                <span id="Pfirst" class="mdui-typo-display-1">4568</span>
+              </div>
+            </div>
+            <div class="mdui-row">
+              <div class="mdui-col-xs-1">
+              </div>
+              <div class="mdui-col-xs-11">
+                <span class="mdui-typo-display-1-opacity">^</span>
+              </div>
+            </div>
+            <div class="mdui-row">
+              <div class="mdui-col-xs-2">
+              </div>
+              <div class="mdui-col-xs-10">
+                <span id="Psecond" class="mdui-typo-display-1">4568</span>
+              </div>
+            </div>
+            <div class="mdui-row">
+              <div class="mdui-col-xs-12">
+                <div class="mdui-textfield mdui-textfield-floating-label">
+                  <label class="mdui-textfield-label">结果</label>
+                  <input id="Pinput" class="mdui-textfield-input" maxlength="60" type="number" required>
+                  <div class="mdui-textfield-error">请输入正确的数字</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="mdui-card-actions">
+            <button onclick="CheckResult(5);" class="mdui-btn mdui-ripple mdui-float-right mdui-text-color-theme-accent">提交结果</button>
+            <button onclick="Operation(5);" class="mdui-btn mdui-ripple mdui-float-right mdui-text-color-theme-accent">查看答案</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="mdui-chip">
+      <a href="https://nd002723.github.io" target="_blank" style="color: rgba(0,0,0,.87);">
+  <span class="mdui-chip-title">東雲的实验室</span></a>
+</div>
+    <!--<button class="mdui-fab mdui-color-theme-accent mdui-fab-fixed mdui-ripple"><i class="mdui-icon material-icons">&#xe145;</i></button>-->
+
+
+    <!--<div class="mdui-fab-wrapper" id="exampleFab" mdui-fab="{trigger: 'hover'}">
+  <button class="mdui-fab mdui-ripple mdui-color-theme-accent">-->
+    <!-- 默认显示的图标 -->
+    <!-- <i class="mdui-icon material-icons">&#xe145;</i>-->
+
+    <!-- 在拨号菜单开始打开时，平滑切换到该图标，若不需要切换图标，则可以省略该元素 -->
+    <!--<i class="mdui-icon mdui-fab-opened material-icons">&#xe254;</i>
+  </button>
+  <div class="mdui-fab-dial">
+    <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-pink"><i class="mdui-icon material-icons">&#xe863;</i></button>
+    <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-red"><i class="mdui-icon material-icons">&#xe869;</i></button>
+    <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-orange"><i class="mdui-icon material-icons">&#xe872;</i></button>
+    <button class="mdui-fab mdui-fab-mini mdui-ripple mdui-color-blue"><i class="mdui-icon material-icons">&#xe87f;</i></button>
+  </div>
+</div>
+
+
+
+  </div>-->
+    <!--<script src="//cdn.bootcss.com/jquery/3.1.1/jquery.slim.js"></script>-->
+    <script src="js/main.js"></script>
+    <script src="js/math.js"></script>
+    <!--<script src="./js/fuction.js"></script>-->
+    <script>
+                             Readconf();
+                             GetRandom();
+    </script>
+</body>
+
+
+<!-- Mirrored from lab.morfans.cn/Let-s- by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 28 Nov 2017 08:00:29 GMT -->
+</html>
